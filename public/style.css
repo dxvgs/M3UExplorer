@@ -1,0 +1,520 @@
+/* --- 1. IMPORTAÇÃO DA FONTE E CONFIGURAÇÕES GERAIS --- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+body {
+    font-family: 'Montserrat', Arial, sans-serif;
+    background-color: #1a1a1a; 
+    color: #e0e0e0; 
+    margin: 0; 
+    padding: 0; 
+}
+
+/* --- CABEÇALHO --- */
+header {
+    background-color: #202020;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #333;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #fafafa;
+    border-bottom: none; 
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 5px; 
+    font-size: 2.2em; 
+}
+
+p {
+    color: #aaa;
+    margin-top: 0;
+    font-size: 1.1em;
+}
+
+/* --- 2. INPUTS E LOADING --- */
+.controls-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; 
+    gap: 15px;
+    margin-top: 25px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.btn-upload {
+    background-color: #00bfa5;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 15px;
+    transition: background-color 0.2s;
+    display: inline-flex; 
+    align-items: center;
+    gap: 8px; 
+}
+
+.btn-upload:hover {
+    background-color: #008c7a;
+}
+
+#searchBar {
+    width: auto; 
+    flex: 1; 
+    max-width: 500px; 
+    box-sizing: border-box; 
+    padding: 11px 15px; 
+    font-size: 15px;
+    margin-bottom: 0; 
+    background-color: #252525;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    border-radius: 5px;
+}
+
+#searchBar::placeholder {
+    color: #888;
+}
+
+#loading {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #00bfa5;
+    text-align: center;
+    width: 100%;
+    padding: 40px 0;
+}
+
+/* --- 3. NAVEGAÇÃO (SÉRIES/FILMES) --- */
+#nav-container {
+    display: flex;
+    margin-top: 20px; 
+    margin-bottom: 0; 
+    border-bottom: none; 
+    justify-content: center; 
+    gap: 10px; 
+}
+
+.nav-btn {
+    flex: 0 1 150px; 
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #aaa;
+    border-bottom: 3px solid transparent;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-btn.active {
+    color: #00bfa5; 
+    border-bottom: 3px solid #00bfa5;
+}
+
+.nav-btn:hover:not(.active) {
+    background-color: #2a2a2a;
+    color: #fafafa;
+}
+
+/* --- 4. CONTAINER PRINCIPAL E CARDS --- */
+#catalogo-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px; 
+    min-height: 400px;
+    justify-content: center; 
+    padding: 0 20px; 
+}
+
+/* --- ESTILO DO CARD (MODIFICADO) --- */
+.catalogo-card {
+    background-color: #252525; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+    cursor: pointer;
+    width: 200px;
+    text-decoration: none; 
+    color: inherit;
+    overflow: hidden; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    /* Novo: Posição relativa para a nota */
+    position: relative; 
+}
+
+.catalogo-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+/* A imagem agora é um placeholder */
+.card-poster {
+    width: 100%;
+    height: 300px; 
+    object-fit: cover; 
+    display: block; 
+    background-color: #333; /* Cor de fundo enquanto carrega */
+}
+
+/* NOVO: Conteúdo de texto do card */
+.card-content {
+    padding: 15px 10px 10px 10px;
+}
+
+.card-title {
+    font-size: 15px; 
+    font-weight: 600;
+    color: #fafafa;
+    margin: 0;
+    /* Evita que o título quebre em 3 linhas */
+    height: 2.5em; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limita a 2 linhas */
+    -webkit-box-orient: vertical;
+}
+
+/* NOVO: Sinopse (Overview) */
+.card-overview {
+    font-size: 13px;
+    color: #aaa;
+    margin-top: 8px;
+    height: 4.5em; /* 3 linhas de sinopse */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limita a 3 linhas */
+    -webkit-box-orient: vertical;
+}
+
+/* NOVO: Nota (Rating) */
+.card-rating {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #00bfa5;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #00bfa5;
+}
+
+
+/* --- 5. NÍVEL 2/3 (Temporadas, Episódios, Voltar) --- */
+.list-item {
+    display: block;
+    width: 100%;
+    max-width: 800px; 
+    margin: 8px auto; 
+    padding: 15px 20px; 
+    background-color: #2a2a2a;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #e0e0e0;
+    transition: background-color 0.2s;
+}
+
+.list-item:hover {
+    background-color: #3a3a3a;
+}
+
+.back-button {
+    background-color: transparent;
+    border: 2px solid #00bfa5;
+    color: #00bfa5;
+    font-weight: 700;
+}
+
+.back-button:hover {
+    background-color: #00bfa5;
+    color: #1a1a1a;
+}
+
+/* --- 6. PAGINAÇÃO --- */
+#pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+    padding-bottom: 40px; 
+}
+
+.pagination-btn {
+    background-color: #00bfa5; 
+    color: #1a1a1a; 
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background-color: #008c7a; 
+}
+
+.pagination-btn:disabled {
+    background-color: #444;
+    color: #888;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    font-size: 16px;
+    font-weight: 600;
+    color: #aaa;
+}
+
+
+/* --- 7. NOVO: Estilos do Modal de Detalhes --- */
+
+#modal-overlay {
+    position: fixed; /* Fica por cima de tudo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Fundo preto semi-transparente */
+    display: flex; /* Começa como 'none' */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#modal-content {
+    background-color: #252525;
+    color: #e0e0e0;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+#modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 2.5em;
+    cursor: pointer;
+    line-height: 1;
+}
+#modal-close:hover {
+    color: #fff;
+}
+
+#modal-loader {
+    text-align: center;
+    font-size: 1.5em;
+    padding: 100px 0;
+    color: #00bfa5;
+}
+
+#modal-details {
+    display: flex; /* Lado a lado */
+    gap: 20px;
+}
+
+#modal-poster {
+    width: 250px;
+    height: auto;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.modal-info {
+    flex: 1; /* Ocupa o resto do espaço */
+}
+
+#modal-title {
+    font-size: 2em;
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.modal-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 1.1em;
+    color: #aaa;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+#modal-rating {
+    color: #00bfa5;
+    font-weight: 700;
+}
+
+#modal-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+#modal-genres span {
+    background-color: #333;
+    color: #ccc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+#modal-overview {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #ccc;
+}
+
+/* Botão de Assistir */
+#modal-play-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #00bfa5;
+    color: #1a1a1a;
+    font-weight: 700;
+    font-size: 1.1em;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: background-color 0.2s;
+}
+
+#modal-play-btn:hover {
+    background-color: #008c7a;
+}
+#modal-play-btn svg {
+    margin-top: -2px; /* Ajuste fino do ícone */
+}
+
+/* Responsividade do Modal */
+@media (max-width: 768px) {
+    #modal-details {
+        flex-direction: column; /* Empilha em telas pequenas */
+    }
+    #modal-poster {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        margin: 0 auto;
+    }
+    #modal-title {
+        font-size: 1.5em;
+    }
+}
+/* --- 8. NOVO: Estilo do Cabeçalho de Detalhes (Séries Nível 2) --- */
+
+/* Adiciona uma classe ao container principal quando em modo lista */
+#catalogo-container.list-view {
+    display: block; /* Muda de flex para bloco */
+    padding: 0 20px;
+    max-width: 840px; /* Limita a largura da lista */
+    margin: 0 auto; /* Centraliza a lista */
+    box-sizing: border-box;
+}
+
+.details-header {
+    display: flex;
+    gap: 25px;
+    background-color: #252525;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.details-header-poster {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.details-header-info {
+    flex: 1;
+}
+.details-header-info h2 {
+    font-size: 2em;
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.details-header-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 1.1em;
+    color: #aaa;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+.details-header-meta .rating {
+    color: #00bfa5;
+    font-weight: 700;
+}
+.details-header-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+.details-header-genres span {
+    background-color: #333;
+    color: #ccc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+.details-header-info p { /* Overview */
+    font-size: 1em;
+    line-height: 1.6;
+    color: #ccc;
+    margin-top: 0;
+}
+
+/* Responsividade do Cabeçalho */
+@media (max-width: 768px) {
+    .details-header {
+        flex-direction: column;
+    }
+    .details-header-poster {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+        margin: 0 auto;
+    }
+    .details-header-info h2 {
+        font-size: 1.5em;
+        text-align: center;
+    }
+}

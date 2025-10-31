@@ -1,0 +1,19 @@
+# --- SEGURANÇA ---
+# Ignora TODOS os arquivos .env. Esta é a regra MAIS IMPORTANTE.
+.env
+
+# --- DEPENDÊNCIAS ---
+# Ignora a pasta de módulos do Node.js (ela é gigante e é reinstalada com 'npm install')
+/node_modules
+
+# --- LOGS ---
+# Ignora arquivos de log que o NPM ou seu servidor possam criar
+*.log
+npm-debug.log*
+
+# --- ARQUIVOS DE SISTEMA OPERACIONAL ---
+# Ignora arquivos "lixo" do Mac
+.DS_Store
+
+# Ignora arquivos "lixo" do Windows
+Thumbs.db

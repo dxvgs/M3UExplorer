@@ -335,7 +335,7 @@ async function fetchTMDBData(cardElement, item, type) {
     const rating = cardElement.querySelector('.card-rating');
 
     try {
-        const url = new URL('/.netlify/functions/tmdb');
+        const url = new URL('/.netlify/functions/api/tmdb');
         url.searchParams.append('query', item.cleanTitle);
         url.searchParams.append('type', type);
         if (item.year) {
@@ -384,7 +384,7 @@ async function showMovieDetails(movie, cardElement) {
     }
 
     try {
-        const url = new URL('/.netlify/functions/tmdb');
+        const url = new URL('/.netlify/functions/api/details');
         url.searchParams.append('type', 'movie');
         url.searchParams.append('id', tmdbId);
 
@@ -542,7 +542,7 @@ async function renderSeasonsList(seriesName, tmdbId) {
  */
 async function createDetailsHeader(container, tmdbId, type) {
     try {
-        const url = new URL('/.netlify/functions/tmdb');
+        const url = new URL('/.netlify/functions/api/details');
         url.searchParams.append('type', type);
         url.searchParams.append('id', tmdbId);
 

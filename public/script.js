@@ -670,3 +670,25 @@ function createBackButton(onClickFunction) {
     backButton.onclick = onClickFunction;
     return backButton;
 }
+// No seu app.js ou index.html (dentro da pasta public)
+
+async function buscarFilmes(termoDeBusca) {
+  
+  // 1. Define a URL da *nossa* função.
+  // Note o caminho: /.netlify/functions/tmdb
+  const urlDaNossaFuncao = `/.netlify/functions/tmdb?query=${termoDeBusca}`;
+
+  // 2. Chama a nossa função (que vai chamar o TMDB por nós)
+  const response = await fetch(urlDaNossaFuncao);
+  const data = await response.json();
+
+  // 3. Usa os dados!
+  console.log(data.results);
+  // data.results é o array de filmes vindo do TMDB
+}
+
+// Exemplo de como buscar "Batman"
+buscarFilmes('batman');
+
+// Exemplo de como buscar os populares (padrão do nosso código)
+// buscarFilmes('popular');
